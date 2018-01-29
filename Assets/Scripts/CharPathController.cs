@@ -10,6 +10,7 @@ public static class CharPathController {
 
 	public static void Initialize(){
 		positions = new List<Vector3> (){ };
+		positions.Add(GameObject.FindGameObjectWithTag("PlazaPosition").transform.position;
 		GameObject[] houseGOs = GameObject.FindGameObjectsWithTag ("HousePosition");
 		foreach (GameObject go in houseGOs) {
 			positions.Add (go.transform.position);
