@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Scripts/CharBody.cs.meta
 guid: 559c411ca8911a0439482b8a61e61ec8
 timeCreated: 1517224825
+=======
+guid: ee059e65af2a9f340b636773bbcaeacb
+folderAsset: yes
+timeCreated: 1517226391
+>>>>>>> Stashed changes:Assets/Materials.meta
 licenseType: Free
 MonoImporter:
   externalObjects: {}
