@@ -10,6 +10,9 @@ TagManager:
   - Pickupable
   - Fire
   - FireBall
+  - HousePosition
+  - PlazaPosition
+  - DudeBodyPart
   layers:
   - Default
   - TransparentFX
