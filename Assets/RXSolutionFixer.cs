@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -42,3 +43,4 @@ class RXSolutionFixer : AssetPostprocessor
 	}
 
 }
+#endif
