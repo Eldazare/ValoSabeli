@@ -8,8 +8,9 @@ public class FireBallBehaviour : MonoBehaviour
     public GameObject explosionPrefab;
     public GameObject childBall;
     public bool canExplode;
-    public bool isFlammable;
     public bool canMultiply;
+    public bool isFlammable;
+    public float burnAfterCol;
     public int numberOfSpawns;
     public int expForce;
     public float spawnXZRandRange;
@@ -51,7 +52,7 @@ public class FireBallBehaviour : MonoBehaviour
                 Vector3 position = new Vector3(Random.Range(-spawnXZRandRange, spawnXZRandRange), Random.Range(-0.3f, spawnYRandRange), Random.Range(-spawnXZRandRange, spawnXZRandRange));
                 GameObject tuhottava = Instantiate(childBall, pos + position, rot);
 
-                Destroy(tuhottava, 8f);
+                //Destroy(tuhottava, 8f);
             }
         }
         if (!isFlammable)
@@ -60,7 +61,7 @@ public class FireBallBehaviour : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject, 4f);
+            Destroy(gameObject, burnAfterCol);
         }
 
     }

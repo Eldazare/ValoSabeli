@@ -367,7 +367,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -507,8 +507,9 @@ MonoBehaviour:
   explosionPrefab: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
   childBall: {fileID: 1349801389118562}
   canExplode: 0
-  isFlammable: 1
   canMultiply: 0
+  isFlammable: 1
+  burnAfterCol: 40
   numberOfSpawns: 0
   expForce: 0
   spawnXZRandRange: 0
