@@ -511,7 +511,7 @@ MonoBehaviour:
   numberOfSpawns: 5
   expForce: 6
   spawnXZRandRange: 0.5
-  spawnYRandRange: 0
+  spawnYRandRange: 1
 --- !u!135 &135950722393240238
 SphereCollider:
   m_ObjectHideFlags: 1
