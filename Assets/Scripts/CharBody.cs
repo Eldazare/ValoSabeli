@@ -8,6 +8,7 @@ public class CharBody : MonoBehaviour {
 	private NavMeshAgent charNav;
 	private int positionIndex;
 	private bool isInitialized = false;
+	private bool waiting = false;
 
 	public void Initialize (int beginningPosIndex){
 		charNav = GetComponent<NavMeshAgent> ();
@@ -17,15 +18,30 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void Update () {
-		if (isInitialized) {
+		if (isInitialized && !waiting) {
 			if (!charNav.pathPending) {
 				if (charNav.remainingDistance <= charNav.stoppingDistance) {
 					if (charNav.hasPath || charNav.velocity.sqrMagnitude == 0f) {
-						positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
-						charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+						if (positionIndex == 0)
+						{
+							StartCoroutine(WaitAtPlaza());
+						}else
+						{
+							positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
+							charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+						}
 					}
 				}
 			}
 		}
+	}
+
+	IEnumerator WaitAtPlaza()
+	{
+		waiting = true;
+		yield return new WaitForSeconds(5f);
+		positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
+		charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+		waiting = false;
 	}
 }
