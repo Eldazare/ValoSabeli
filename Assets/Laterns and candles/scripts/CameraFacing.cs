@@ -10,7 +10,7 @@ using System.Collections;
 public class CameraFacing : MonoBehaviour
 {
 	public Camera cameraToLookAt;
-	void Awake() {
+	void Start() {
 		cameraToLookAt = Camera.main; }
 	void Update() 
 	{
