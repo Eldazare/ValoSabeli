@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour {
 
 
 	void Start(){
+		DudeManager.Init();
 		for (int i = 0; i < 22; i++) {
 			SpawnStickFigure ();
 		}

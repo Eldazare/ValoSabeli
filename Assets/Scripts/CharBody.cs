@@ -7,6 +7,8 @@ public class CharBody : MonoBehaviour {
 
 	// TODO: Tags: Ground Water
 
+	CharAnimations anims;
+
 	public float killHeight = 10.0f;
 	private NavMeshAgent charNav;
 	private int positionIndex;
@@ -17,9 +19,11 @@ public class CharBody : MonoBehaviour {
 	private float maxheight;
 
 	public void Initialize (int beginningPosIndex){
+		anims = GetComponent<CharAnimations>();
 		charNav = GetComponent<NavMeshAgent> ();
 		positionIndex = CharPathController.GetNextSpotIndex (beginningPosIndex);
 		charNav.SetDestination(CharPathController.GetNextSpotVector(positionIndex));
+		anims.Walk();
 		maxheight = 0;
 		isInitialized = true;
 	}
@@ -36,6 +40,7 @@ public class CharBody : MonoBehaviour {
 						{
 							positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
 							charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+							anims.Walk();
 						}
 					}
 				}
@@ -48,6 +53,7 @@ public class CharBody : MonoBehaviour {
 
 	IEnumerator WaitAtPlaza()
 	{
+		anims.Idle();
 		waiting = true;
 		yield return new WaitForSeconds(5f);
 		positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
@@ -59,6 +65,7 @@ public class CharBody : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col){
 		if (col.collider.CompareTag ("Ground")) {
+			anims.HitGround();
 			isGrabbed = false;
 			charNav.enabled = false;
 			if (maxheight - transform.position.y > killHeight) {
@@ -80,6 +87,7 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void OnInteractableObjectGrabbed(GameObject go){
+		anims.Grabbed();
 		isGrabbed = true;
 		charNav.enabled = false;
 	}

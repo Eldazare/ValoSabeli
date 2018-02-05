@@ -31,6 +31,8 @@ public static class DudeManager {
 		default:
 			break;
 		}
+
+		StatsText.instance.UpdateText();
 	}
 
 	public static string GetDeathAmountString(){

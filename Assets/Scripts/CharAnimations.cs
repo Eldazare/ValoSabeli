@@ -7,7 +7,7 @@ public class CharAnimations : MonoBehaviour {
 	Animator animator;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		animator = GetComponent<Animator>();
 	}
 	
@@ -16,17 +16,27 @@ public class CharAnimations : MonoBehaviour {
 		
 	}
 
-	void OnInteractableObjectGrabbed(GameObject obj)
+	public void Grabbed()
 	{
+		animator.SetBool("Grounded", false);
 		animator.SetBool("Ragdolled", true);
 	}
 
-	void OnCollisionEnter(Collision col)
+	public void HitGround()
 	{
-		if (col.gameObject.tag == "Ground")
-		{
-			animator.SetBool("Ragdolled", false);
-			animator.SetTrigger("Land");
-		}
+		animator.SetBool("Ragdolled", false);
+		animator.SetTrigger("Land");
+		animator.SetBool("Grounded", true);
+	}
+
+	public void Walk()
+	{
+		animator.SetBool("Grounded", true);
+		animator.SetBool("Walk", true);
+	}
+
+	public void Idle()
+	{
+		animator.SetBool("Walk", false);
 	}
 }

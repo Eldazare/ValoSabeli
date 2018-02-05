@@ -378,6 +378,7 @@ GameObject:
   - component: {fileID: 195223065150450508}
   - component: {fileID: 114215017150693064}
   - component: {fileID: 114351064152204602}
+  - component: {fileID: 114686208935083352}
   m_Layer: 0
   m_Name: Dude
   m_TagString: Untagged
@@ -1689,6 +1690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559c411ca8911a0439482b8a61e61ec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killHeight: 10
 --- !u!114 &114396649316425164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1951,6 +1953,17 @@ MonoBehaviour:
   useOverrideButton: 0
   allowedUseControllers: 0
   usingState: 0
+--- !u!114 &114686208935083352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1518685727751526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1328eb03fc4b449a7f97ab588da813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114690026424869228
 MonoBehaviour:
   m_ObjectHideFlags: 1
