@@ -9,8 +9,7 @@ public class StunBehaviour : MonoBehaviour {
     {
         if (other.CompareTag("DudeBodyPart"))
         {
-            Animator dudeAnimator;
-            dudeAnimator = other.GetComponentInParent<Animator>();
+            other.transform.transform.GetComponentInParent<CharAnimations>().Ragdoll();
         }
     }
     // Use this for initialization
