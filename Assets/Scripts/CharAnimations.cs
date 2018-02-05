@@ -16,7 +16,7 @@ public class CharAnimations : MonoBehaviour {
 		
 	}
 
-	public void Grabbed()
+	public void Ragdoll()
 	{
 		animator.SetBool("Grounded", false);
 		animator.SetBool("Ragdolled", true);

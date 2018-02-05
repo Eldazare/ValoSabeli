@@ -87,7 +87,7 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void OnInteractableObjectGrabbed(GameObject go){
-		anims.Grabbed();
+		anims.Ragdoll();
 		isGrabbed = true;
 		charNav.enabled = false;
 	}

@@ -6,7 +6,8 @@ public static class CharPathController {
 
 	private static List<Vector3> positions;
 	private static bool isInitialized = false;
-	private static float plazaRadius = 7.0f;
+	private static float plazaMinRadius = 7f;
+	private static float plazaRadius = 15f;
 
 	public static void Initialize(){
 		positions = new List<Vector3> (){ };
@@ -38,7 +39,7 @@ public static class CharPathController {
 
 	public static Vector3 GetNextSpotVector(int nextIndex){
 		if (nextIndex == 0) {
-			Vector3 randomBonusVec = new Vector3 (Random.Range (-1.0f, 1.0f), 0, Random.Range (-1.0f, 1.0f)).normalized * Random.Range (3.5f, plazaRadius);
+			Vector3 randomBonusVec = new Vector3 (Random.Range (-1.0f, 1.0f), 0, Random.Range (-1.0f, 1.0f)).normalized * Random.Range (plazaMinRadius, plazaRadius);
 			return positions [nextIndex] + randomBonusVec;
 		} else {
 			return positions [nextIndex];
