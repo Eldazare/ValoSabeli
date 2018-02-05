@@ -591,9 +591,10 @@ MonoBehaviour:
   isFlammable: 0
   burnAfterCol: 0
   numberOfSpawns: 5
-  expForce: 6
+  expForce: 10
   spawnXZRandRange: 0.5
   spawnYRandRange: 1
+  stunSphere: {fileID: 0}
 --- !u!114 &114936185614668020
 MonoBehaviour:
   m_ObjectHideFlags: 1

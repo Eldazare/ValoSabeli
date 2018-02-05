@@ -509,7 +509,7 @@ MonoBehaviour:
   canExplode: 0
   canMultiply: 0
   isFlammable: 1
-  burnAfterCol: 30
+  burnAfterCol: 10
   numberOfSpawns: 0
   expForce: 0
   spawnXZRandRange: 0
