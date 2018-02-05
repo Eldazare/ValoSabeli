@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.Effects;
 
 public class FireBallBehaviour : MonoBehaviour
@@ -10,11 +8,18 @@ public class FireBallBehaviour : MonoBehaviour
     public bool canExplode;
     public bool canMultiply;
     public bool isFlammable;
+
     public float burnAfterCol;
     public int numberOfSpawns;
     public int expForce;
     public float spawnXZRandRange;
     public float spawnYRandRange;
+
+    public GameObject stunSpherePrefab;
+    public bool isStunnable;
+    public float stunRadius;
+    public float stunLifeTime;
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -29,12 +34,22 @@ public class FireBallBehaviour : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 pos = contact.point;
+        
+        if (isStunnable)
+        {
+            GameObject stunSphere;
+            stunSpherePrefab.GetComponent<SphereCollider>().radius = stunRadius;
+            stunSphere = Instantiate(stunSpherePrefab, pos, rot);
+            Destroy(stunSphere, stunLifeTime);
+        }
+
 
         if (canExplode)
         {
             GameObject explosion;
             explosionPrefab.GetComponent<ExplosionPhysicsForce>().explosionForce = expForce;
             explosion = Instantiate(explosionPrefab, pos, rot);
+
         }
 
         if (isFlammable)
