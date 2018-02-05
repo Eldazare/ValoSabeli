@@ -9,6 +9,8 @@ public class FireBallBehaviour : MonoBehaviour
     public GameObject childBall;
     public bool canExplode;
     public bool canMultiply;
+    public bool isFlammable;
+    public float burnAfterCol;
     public int numberOfSpawns;
     public int expForce;
     public float spawnXZRandRange;
@@ -16,19 +18,33 @@ public class FireBallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!canExplode)
-            return;
 
+        if (!canExplode && !isFlammable)
+        {
+            return;
+        }
         if (collision.collider.CompareTag("FireBall"))
             return;
 
         ContactPoint contact = collision.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 pos = contact.point;
-        GameObject explosion;
-        explosionPrefab.GetComponent<ExplosionPhysicsForce>().explosionForce = expForce;
-        explosion = Instantiate(explosionPrefab, pos, rot);
-        
+
+        if (canExplode)
+        {
+            GameObject explosion;
+            explosionPrefab.GetComponent<ExplosionPhysicsForce>().explosionForce = expForce;
+            explosion = Instantiate(explosionPrefab, pos, rot);
+        }
+
+        if (isFlammable)
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Collider>().enabled = false;
+
+        }
 
         if (canMultiply)
         {
@@ -36,10 +52,18 @@ public class FireBallBehaviour : MonoBehaviour
                 Vector3 position = new Vector3(Random.Range(-spawnXZRandRange, spawnXZRandRange), Random.Range(-0.3f, spawnYRandRange), Random.Range(-spawnXZRandRange, spawnXZRandRange));
                 GameObject tuhottava = Instantiate(childBall, pos + position, rot);
 
-                Destroy(tuhottava, 8f);
+                //Destroy(tuhottava, 8f);
             }
         }
-        Destroy(gameObject);
+        if (!isFlammable)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject, burnAfterCol);
+        }
+
     }
 
 

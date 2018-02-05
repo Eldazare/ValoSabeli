@@ -367,7 +367,7 @@ MeshRenderer:
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -420,7 +420,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!108 &108758686284587106
 Light:
   m_ObjectHideFlags: 1
@@ -479,8 +479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29014cd42b6d273408e0ceefd336c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDuration: 3
-  maxDuration: 6
+  minDuration: 60
+  maxDuration: 60
 --- !u!114 &114627048001155008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -508,6 +508,8 @@ MonoBehaviour:
   childBall: {fileID: 1349801389118562}
   canExplode: 0
   canMultiply: 0
+  isFlammable: 1
+  burnAfterCol: 30
   numberOfSpawns: 0
   expForce: 0
   spawnXZRandRange: 0
