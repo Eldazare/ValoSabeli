@@ -594,7 +594,8 @@ MonoBehaviour:
   expForce: 10
   spawnXZRandRange: 0.5
   spawnYRandRange: 1
-  stunSpherePrefab: {fileID: 0}
+  stunSpherePrefab: {fileID: 1327493275503610, guid: 6af99ea6f46b08a4ba2523dccdd6271f,
+    type: 2}
   isStunnable: 1
   stunRadius: 5
   stunLifeTime: 1
