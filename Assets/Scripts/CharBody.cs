@@ -5,27 +5,83 @@ using UnityEngine.AI;
 
 public class CharBody : MonoBehaviour {
 
+	// TODO: Tags: Ground Water
+
+	public float killHeight = 10.0f;
 	private NavMeshAgent charNav;
 	private int positionIndex;
 	private bool isInitialized = false;
+	private bool waiting = false;
+	private bool isGrabbed = false;
+
+	private float maxheight;
 
 	public void Initialize (int beginningPosIndex){
 		charNav = GetComponent<NavMeshAgent> ();
 		positionIndex = CharPathController.GetNextSpotIndex (beginningPosIndex);
 		charNav.SetDestination(CharPathController.GetNextSpotVector(positionIndex));
+		maxheight = 0;
 		isInitialized = true;
 	}
 
 	void Update () {
-		if (isInitialized) {
+		if (isInitialized && !waiting && !isGrabbed) {
 			if (!charNav.pathPending) {
 				if (charNav.remainingDistance <= charNav.stoppingDistance) {
 					if (charNav.hasPath || charNav.velocity.sqrMagnitude == 0f) {
-						positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
-						charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+						if (positionIndex == 0)
+						{
+							StartCoroutine(WaitAtPlaza());
+						}else
+						{
+							positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
+							charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+						}
 					}
 				}
 			}
 		}
+		if (transform.position.y > maxheight) {
+			maxheight = transform.position.y;
+		}
 	}
+
+	IEnumerator WaitAtPlaza()
+	{
+		waiting = true;
+		yield return new WaitForSeconds(5f);
+		positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
+		charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+		waiting = false;
+	}
+
+
+
+	void OnCollisionEnter (Collision col){
+		if (col.collider.CompareTag ("Ground")) {
+			isGrabbed = false;
+			charNav.enabled = false;
+			if (maxheight - transform.position.y > killHeight) {
+				DudeManager.reportDeath (2);
+				Destroy (this.gameObject, 0.1f);
+			}
+		} else if (col.collider.CompareTag ("FireBall")) {
+			DudeManager.reportDeath (0);
+			Destroy (this, 1.0f);
+		}
+	}
+
+	void OnTriggerEnter (Collider other){
+		if (other.CompareTag ("Water")) {
+			//Drowning animation lol
+			DudeManager.reportDeath(1);
+			Destroy(this,0.5f);
+		}
+	}
+
+	void OnInteractableObjectGrabbed(GameObject go){
+		isGrabbed = true;
+		charNav.enabled = false;
+	}
+
 }

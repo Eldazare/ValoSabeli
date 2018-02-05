@@ -6,11 +6,11 @@ public static class CharPathController {
 
 	private static List<Vector3> positions;
 	private static bool isInitialized = false;
-	private static float plazaRadius = 4.0f;
+	private static float plazaRadius = 7.0f;
 
 	public static void Initialize(){
 		positions = new List<Vector3> (){ };
-		positions.Add(GameObject.FindGameObjectWithTag("PlazaPosition").transform.position;
+		positions.Add(GameObject.FindGameObjectWithTag("PlazaPosition").transform.position);
 		GameObject[] houseGOs = GameObject.FindGameObjectsWithTag ("HousePosition");
 		foreach (GameObject go in houseGOs) {
 			positions.Add (go.transform.position);
@@ -38,7 +38,7 @@ public static class CharPathController {
 
 	public static Vector3 GetNextSpotVector(int nextIndex){
 		if (nextIndex == 0) {
-			Vector3 randomBonusVec = new Vector3 (Random.Range (-1.0f, 1.0f), Random.Range (-1.0f, 1.0f), 0).normalized * Random.Range (0.0f, plazaRadius);
+			Vector3 randomBonusVec = new Vector3 (Random.Range (-1.0f, 1.0f), 0, Random.Range (-1.0f, 1.0f)).normalized * Random.Range (3.5f, plazaRadius);
 			return positions [nextIndex] + randomBonusVec;
 		} else {
 			return positions [nextIndex];

@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Bobbos.unity
+    guid: 4dc07b6f862c644da916da00a9338251
+  - enabled: 0
+    path: Assets/VRTK/Examples/025_Controls_Overview.unity
+    guid: b62e5ac17f705524cad1b16219dba697

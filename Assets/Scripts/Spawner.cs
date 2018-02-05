@@ -13,9 +13,9 @@ public class Spawner : MonoBehaviour {
 		}
 	}
 
-	private void SpawnStickFigure(){
+	public void SpawnStickFigure(){
 		int spawnIndex = CharPathController.GetRandomSpotIndex();
-		Vector3 spawnPos = CharPathController.GetSpecificSpotVector (spawnIndex);
+		Vector3 spawnPos = CharPathController.GetNextSpotVector (spawnIndex);
 		GameObject stickFig = Instantiate (stickFigurePrefab, spawnPos, Quaternion.identity) as GameObject; 
 		stickFig.GetComponent<CharBody> ().Initialize (spawnIndex);
 	}
