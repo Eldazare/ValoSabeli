@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StunBehaviour : MonoBehaviour {
+	List<GameObject> hit;
 
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("DudeBodyPart"))
+		if (hit == null)
+			hit = new List<GameObject>();
+		if (other.CompareTag("DudeBodyPart") && !hit.Contains(other.gameObject))
         {
+			hit.Add(other.gameObject);
             other.transform.transform.GetComponentInParent<CharAnimations>().Ragdoll();
         }
     }
