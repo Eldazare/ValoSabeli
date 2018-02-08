@@ -16,11 +16,16 @@ public class CharBody : MonoBehaviour {
 	private bool waiting = false;
 	public bool isGrabbed = false;
 
+	private bool stunned = false;
 	private bool dead = false;
+	public float stunTime;
+	private Vector3 rigOrigPos;
+	public Transform pelvis;
 
 	private float maxheight;
 
 	public void Initialize (int beginningPosIndex){
+		rigOrigPos = pelvis.position - transform.position;
 		anims = GetComponent<CharAnimations>();
 		charNav = GetComponent<NavMeshAgent> ();
 		positionIndex = CharPathController.GetNextSpotIndex (beginningPosIndex);
@@ -31,7 +36,7 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void Update () {
-		if (isInitialized && !waiting && !isGrabbed) {
+		if (isInitialized && !waiting && !isGrabbed && !stunned) {
 			if (!charNav.pathPending) {
 				if (charNav.remainingDistance <= charNav.stoppingDistance) {
 					if (charNav.hasPath || charNav.velocity.sqrMagnitude == 0f) {
@@ -58,8 +63,10 @@ public class CharBody : MonoBehaviour {
 		anims.Idle();
 		waiting = true;
 		yield return new WaitForSeconds(5f);
-		positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
-		charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+		if (!isGrabbed && !dead && !stunned){
+			positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
+			charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+		}
 		waiting = false;
 	}
 
@@ -74,20 +81,20 @@ public class CharBody : MonoBehaviour {
 			isGrabbed = false;
 			charNav.enabled = false;
 			if (maxheight - transform.position.y > killHeight) {
-				DudeManager.reportDeath (DeathType.Fall);
-				dead = true;
-				Destroy (this.gameObject, 15f);
+				Die (DeathType.Fall);
 			}
 		} else if (col.CompareTag ("FireBall")) {
-			DudeManager.reportDeath (DeathType.Burn);
-			dead = true;
-			Destroy (this, 15f);
+			Die (DeathType.Burn);
 		} else if (col.CompareTag ("Water")) {
 			//Drowning animation lol
-			DudeManager.reportDeath(DeathType.Drown);
-			dead = true;
-			Destroy(this, 15f);
+			Die(DeathType.Drown);
 		}
+	}
+
+	void Die(DeathType type){
+		DudeManager.reportDeath(type);
+		dead = true;
+		Destroy(gameObject, 15f);
 	}
 
 	public void Grabbed(){
@@ -96,4 +103,27 @@ public class CharBody : MonoBehaviour {
 		charNav.enabled = false;
 	}
 
+	public void UnGrabbed(){
+		isGrabbed = false;
+		StartCoroutine(Stun());
+	}
+
+	IEnumerator Stun() {
+		stunned = true;
+		yield return new WaitForSeconds(Random.Range(0.75f*stunTime, 1.5f * stunTime));
+		if (dead)
+			yield break;
+		transform.position += new Vector3(pelvis.position.x - transform.position.x, 0f, pelvis.position.z - transform.position.z);
+		pelvis.position = rigOrigPos;
+		charNav.enabled = true;
+		if (charNav.isOnNavMesh) {
+			positionIndex = CharPathController.GetNextSpotIndex(positionIndex);
+			charNav.SetDestination(CharPathController.GetNextSpotVector(positionIndex));
+			anims.Walk();
+		}
+		else {
+			Die(DeathType.Fall);
+		}
+		stunned = false;
+	}
 }

@@ -11,17 +11,11 @@ public class CharAnimations : MonoBehaviour {
 	void Awake () {
 		animator = GetComponent<Animator>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void Ragdoll()
 	{
 		animator.SetBool("Grounded", false);
 		animator.SetBool("Ragdolled", true);
-        GetComponent<NavMeshAgent>().enabled = false;
         animator.enabled = false;
 	}
 
@@ -34,12 +28,17 @@ public class CharAnimations : MonoBehaviour {
 
 	public void Walk()
 	{
+		animator.enabled = true;
 		animator.SetBool("Grounded", true);
+		animator.SetBool("Ragdolled", false);
 		animator.SetBool("Walk", true);
 	}
 
 	public void Idle()
 	{
+		animator.enabled = true;
+		animator.SetBool("Grounded", true);
+		animator.SetBool("Ragdolled", false);
 		animator.SetBool("Walk", false);
 	}
 }
