@@ -23,7 +23,6 @@ public class CharAnimations : MonoBehaviour {
 		animator.SetBool("Ragdolled", true);
         GetComponent<NavMeshAgent>().enabled = false;
         animator.enabled = false;
-		GetComponent<CharBody>().isGrabbed = true;
 	}
 
 	public void HitGround()

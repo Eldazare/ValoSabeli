@@ -6,8 +6,8 @@ public static class CharPathController {
 
 	private static List<Vector3> positions;
 	private static bool isInitialized = false;
-	private static float plazaMinRadius = 7f;
-	private static float plazaRadius = 15f;
+	private static float plazaMinRadius = 20f;
+	private static float plazaRadius = 35f;
 
 	public static void Initialize(){
 		positions = new List<Vector3> (){ };

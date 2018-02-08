@@ -7,7 +7,7 @@ public class CharBody : MonoBehaviour {
 
 	// TODO: Tags: Ground Water
 
-	CharAnimations anims;
+	private CharAnimations anims;
 
 	public float killHeight = 10.0f;
 	private NavMeshAgent charNav;
