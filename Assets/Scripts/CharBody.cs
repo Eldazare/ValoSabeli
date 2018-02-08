@@ -14,7 +14,9 @@ public class CharBody : MonoBehaviour {
 	private int positionIndex;
 	private bool isInitialized = false;
 	private bool waiting = false;
-	private bool isGrabbed = false;
+	public bool isGrabbed = false;
+
+	private bool dead = false;
 
 	private float maxheight;
 
@@ -63,30 +65,32 @@ public class CharBody : MonoBehaviour {
 
 
 
-	void OnCollisionEnter (Collision col){
-		if (col.collider.CompareTag ("Ground")) {
+	void OnTriggerEnter (Collider col){
+		if (dead)
+			return;
+		
+		if (col.CompareTag ("Ground")) {
 			anims.HitGround();
 			isGrabbed = false;
 			charNav.enabled = false;
 			if (maxheight - transform.position.y > killHeight) {
-				DudeManager.reportDeath (2);
-				Destroy (this.gameObject, 0.1f);
+				DudeManager.reportDeath (DeathType.Fall);
+				dead = true;
+				Destroy (this.gameObject, 15f);
 			}
-		} else if (col.collider.CompareTag ("FireBall")) {
-			DudeManager.reportDeath (0);
-			Destroy (this, 1.0f);
-		}
-	}
-
-	void OnTriggerEnter (Collider other){
-		if (other.CompareTag ("Water")) {
+		} else if (col.CompareTag ("FireBall")) {
+			DudeManager.reportDeath (DeathType.Burn);
+			dead = true;
+			Destroy (this, 15f);
+		} else if (col.CompareTag ("Water")) {
 			//Drowning animation lol
-			DudeManager.reportDeath(1);
-			Destroy(this,0.5f);
+			DudeManager.reportDeath(DeathType.Drown);
+			dead = true;
+			Destroy(this, 15f);
 		}
 	}
 
-	void OnInteractableObjectGrabbed(GameObject go){
+	public void Grabbed(){
 		anims.Ragdoll();
 		isGrabbed = true;
 		charNav.enabled = false;
