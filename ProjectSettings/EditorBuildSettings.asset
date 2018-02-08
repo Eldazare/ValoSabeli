@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/VRTK/Examples/025_Controls_Overview.unity
     guid: b62e5ac17f705524cad1b16219dba697
-  - enabled: 1
+  - enabled: 0
     path: Assets/BobbosEmpty.unity
     guid: df8c90e8947bb09499a2fcc523763eed
+  - enabled: 1
+    path: Assets/BobbosNewBebbos.unity
+    guid: 520dd26905647482b98ef2ca68a8e635
