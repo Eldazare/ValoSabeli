@@ -19,7 +19,10 @@ public class SceneManagering : MonoBehaviour {
             SceneManager.LoadScene(scene.name);
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit();
+        }
 
 
 	}
