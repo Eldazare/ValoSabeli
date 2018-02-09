@@ -93,6 +93,7 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void Die(DeathType type){
+		anims.Ragdoll();
 		charNav.enabled = false;
 		anims.Blood();
 		DudeManager.reportDeath(type);
@@ -114,7 +115,7 @@ public class CharBody : MonoBehaviour {
 	IEnumerator Stun() {
 		stunned = true;
 		yield return new WaitForSeconds(Random.Range(0.75f*stunTime, 1.5f * stunTime));
-		if (dead)
+		if (dead || isGrabbed)
 			yield break;
 		transform.position += new Vector3(pelvis.position.x - transform.position.x, 0f, pelvis.position.z - transform.position.z);
 		pelvis.position = rigOrigPos;
