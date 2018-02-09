@@ -28,7 +28,7 @@ public class FireBallBehaviour : MonoBehaviour
         {
             return;
         }
-        if (collision.collider.CompareTag("FireBall"))
+        if (collision.collider.CompareTag("FireBall") || collision.collider.CompareTag("StunSphere"))
             return;
 
         ContactPoint contact = collision.contacts[0];
@@ -64,7 +64,7 @@ public class FireBallBehaviour : MonoBehaviour
         if (canMultiply)
         {
             for (int i = 0; i < numberOfSpawns; i++) {
-                Vector3 position = new Vector3(Random.Range(-spawnXZRandRange, spawnXZRandRange), Random.Range(-0.3f, spawnYRandRange), Random.Range(-spawnXZRandRange, spawnXZRandRange));
+                Vector3 position = new Vector3(Random.Range(-spawnXZRandRange, spawnXZRandRange), Random.Range(0f, spawnYRandRange), Random.Range(-spawnXZRandRange, spawnXZRandRange));
                 GameObject tuhottava = Instantiate(childBall, pos + position, rot);
 
                 //Destroy(tuhottava, 8f);
