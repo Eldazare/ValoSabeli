@@ -18,6 +18,6 @@ public class Spawner : MonoBehaviour {
 		int spawnIndex = CharPathController.GetRandomSpotIndex();
 		Vector3 spawnPos = CharPathController.GetNextSpotVector (spawnIndex);
 		GameObject stickFig = Instantiate (stickFigurePrefab, spawnPos, Quaternion.identity) as GameObject; 
-		stickFig.GetComponent<CharBody> ().Initialize (spawnIndex);
+		stickFig.transform.Find("basic_rig/basic_rig Pelvis").GetComponent<CharBody> ().Initialize (spawnIndex);
 	}
 }

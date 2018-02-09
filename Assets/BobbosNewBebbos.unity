@@ -13312,10 +13312,23 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 2}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 64930785027246110, guid: 9485b0c79d11e2e4d0007da98d76c639,
+        type: 2}
+      propertyPath: m_CookingOptions
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 64930785027246110, guid: 9485b0c79d11e2e4d0007da98d76c639,
         type: 2}
       propertyPath: m_Convex
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9485b0c79d11e2e4d0007da98d76c639, type: 2}
@@ -17493,7 +17506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f72e29272d52c945932963627300fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stickFigurePrefab: {fileID: 1108279401465514, guid: 9a0df74ead20dcf43a774adfc8972a54,
+  stickFigurePrefab: {fileID: 1212781862301534, guid: cea6effb5f9bb7e409897c5cb17837c6,
     type: 2}
 --- !u!4 &1021991397
 Transform:

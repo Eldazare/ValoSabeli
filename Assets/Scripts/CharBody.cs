@@ -7,10 +7,10 @@ public class CharBody : MonoBehaviour {
 
 	// TODO: Tags: Ground Water
 
-	private CharAnimations anims;
+	public CharAnimations anims;
 
 	public float killHeight = 10.0f;
-	private NavMeshAgent charNav;
+	public NavMeshAgent charNav;
 	private int positionIndex;
 	private bool isInitialized = false;
 	private bool waiting = false;
@@ -26,8 +26,8 @@ public class CharBody : MonoBehaviour {
 
 	public void Initialize (int beginningPosIndex){
 		rigOrigPos = pelvis.position - transform.position;
-		anims = GetComponent<CharAnimations>();
-		charNav = GetComponent<NavMeshAgent> ();
+//		anims = GetComponent<CharAnimations>();
+//		charNav = GetComponent<NavMeshAgent> ();
 		positionIndex = CharPathController.GetNextSpotIndex (beginningPosIndex);
 		charNav.SetDestination(CharPathController.GetNextSpotVector(positionIndex));
 		anims.Walk();
@@ -71,12 +71,33 @@ public class CharBody : MonoBehaviour {
 		waiting = false;
 	}
 
-
+	void OnCollisionEnter (Collision col){
+		if (dead)
+			return;
+//		if (col.collider.tag != "Pickupable" && col.collider.tag != "DudeBodyPart")
+//			print(col.collider.tag);
+		if (col.collider.CompareTag ("Ground")) {
+			anims.HitGround();
+			isGrabbed = false;
+			charNav.enabled = false;
+			if (maxheight - transform.position.y > killHeight) {
+				Die (DeathType.Fall);
+			} else {
+				StartCoroutine(Stun());
+			}
+		} else if (col.collider.CompareTag ("FireBall")) {
+			Die (DeathType.Burn);
+		} else if (col.collider.CompareTag ("Water")) {
+			//Drowning animation lol
+			Die(DeathType.Drown);
+		}
+	}
 
 	void OnTriggerEnter (Collider col){
 		if (dead)
 			return;
-		
+		if (col.tag != "Pickupable" && col.tag != "DudeBodyPart")
+			print(col.tag);
 		if (col.CompareTag ("Ground")) {
 			anims.HitGround();
 			isGrabbed = false;
