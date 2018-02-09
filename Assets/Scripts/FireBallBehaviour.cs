@@ -8,6 +8,7 @@ public class FireBallBehaviour : MonoBehaviour
     public bool canExplode;
     public bool canMultiply;
     public bool isFlammable;
+    public float burnRadius;
 
     public float burnAfterCol;
     public int numberOfSpawns;
@@ -57,7 +58,8 @@ public class FireBallBehaviour : MonoBehaviour
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
             GetComponent<Rigidbody>().isKinematic = false;
-            GetComponent<Collider>().enabled = false;
+            GetComponent<SphereCollider>().isTrigger = true;
+            GetComponent<SphereCollider>().radius = burnRadius;
 
         }
 
