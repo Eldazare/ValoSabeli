@@ -90,6 +90,7 @@ public class CharBody : MonoBehaviour {
 		} else if (col.collider.CompareTag ("Water")) {
 			//Drowning animation lol
 			Die(DeathType.Drown);
+			Physics.IgnoreCollision(col.collider, GetComponent<Collider>());
 		}
 	}
 

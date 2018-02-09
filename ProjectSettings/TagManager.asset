@@ -18,6 +18,7 @@ TagManager:
   - Water
   - Interact
   - StunSphere
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - 
   - 
   - DudeColliders
-  - 
+  - DudeRagdollExtras
   - 
   - 
   - 
