@@ -36,7 +36,7 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void Update () {
-		if (isInitialized && !waiting && !isGrabbed && !stunned) {
+		if (isInitialized && !waiting && !isGrabbed && !stunned && !dead) {
 			if (!charNav.pathPending) {
 				if (charNav.remainingDistance <= charNav.stoppingDistance) {
 					if (charNav.hasPath || charNav.velocity.sqrMagnitude == 0f) {
@@ -66,6 +66,7 @@ public class CharBody : MonoBehaviour {
 		if (!isGrabbed && !dead && !stunned){
 			positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
 			charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+			anims.Walk();
 		}
 		waiting = false;
 	}
@@ -92,6 +93,8 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void Die(DeathType type){
+		charNav.enabled = false;
+		anims.Blood();
 		DudeManager.reportDeath(type);
 		dead = true;
 		Destroy(gameObject, 15f);
