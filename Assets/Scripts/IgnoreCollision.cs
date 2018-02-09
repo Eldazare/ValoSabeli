@@ -16,11 +16,11 @@ public class IgnoreCollision : MonoBehaviour {
 		
 	}
 
-	void OnCollisionEnter(Collision col)
-	{
-		if (col.collider.tag == "Pickupable")
-		{
-			Physics.IgnoreCollision(myCol, col.collider);
-		}
-	}
+//	void OnCollisionEnter(Collision col)
+//	{
+//		if (col.collider.tag == "Pickupable")
+//		{
+//			Physics.IgnoreCollision(myCol, col.collider);
+//		}
+//	}
 }

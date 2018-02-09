@@ -7,18 +7,25 @@ public class CharBody : MonoBehaviour {
 
 	// TODO: Tags: Ground Water
 
-	CharAnimations anims;
+	private CharAnimations anims;
 
 	public float killHeight = 10.0f;
 	private NavMeshAgent charNav;
 	private int positionIndex;
 	private bool isInitialized = false;
 	private bool waiting = false;
-	private bool isGrabbed = false;
+	public bool isGrabbed = false;
+
+	private bool stunned = false;
+	private bool dead = false;
+	public float stunTime;
+	private Vector3 rigOrigPos;
+	public Transform pelvis;
 
 	private float maxheight;
 
 	public void Initialize (int beginningPosIndex){
+		rigOrigPos = pelvis.position - transform.position;
 		anims = GetComponent<CharAnimations>();
 		charNav = GetComponent<NavMeshAgent> ();
 		positionIndex = CharPathController.GetNextSpotIndex (beginningPosIndex);
@@ -29,7 +36,7 @@ public class CharBody : MonoBehaviour {
 	}
 
 	void Update () {
-		if (isInitialized && !waiting && !isGrabbed) {
+		if (isInitialized && !waiting && !isGrabbed && !stunned) {
 			if (!charNav.pathPending) {
 				if (charNav.remainingDistance <= charNav.stoppingDistance) {
 					if (charNav.hasPath || charNav.velocity.sqrMagnitude == 0f) {
@@ -56,40 +63,67 @@ public class CharBody : MonoBehaviour {
 		anims.Idle();
 		waiting = true;
 		yield return new WaitForSeconds(5f);
-		positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
-		charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+		if (!isGrabbed && !dead && !stunned){
+			positionIndex = CharPathController.GetNextSpotIndex (positionIndex);
+			charNav.SetDestination (CharPathController.GetNextSpotVector (positionIndex));
+		}
 		waiting = false;
 	}
 
 
 
-	void OnCollisionEnter (Collision col){
-		if (col.collider.CompareTag ("Ground")) {
+	void OnTriggerEnter (Collider col){
+		if (dead)
+			return;
+		
+		if (col.CompareTag ("Ground")) {
 			anims.HitGround();
 			isGrabbed = false;
 			charNav.enabled = false;
 			if (maxheight - transform.position.y > killHeight) {
-				DudeManager.reportDeath (2);
-				Destroy (this.gameObject, 0.1f);
+				Die (DeathType.Fall);
 			}
-		} else if (col.collider.CompareTag ("FireBall")) {
-			DudeManager.reportDeath (0);
-			Destroy (this, 1.0f);
-		}
-	}
-
-	void OnTriggerEnter (Collider other){
-		if (other.CompareTag ("Water")) {
+		} else if (col.CompareTag ("FireBall")) {
+			Die (DeathType.Burn);
+		} else if (col.CompareTag ("Water")) {
 			//Drowning animation lol
-			DudeManager.reportDeath(1);
-			Destroy(this,0.5f);
+			Die(DeathType.Drown);
 		}
 	}
 
-	void OnInteractableObjectGrabbed(GameObject go){
+	void Die(DeathType type){
+		DudeManager.reportDeath(type);
+		dead = true;
+		Destroy(gameObject, 15f);
+	}
+
+	public void Grabbed(){
 		anims.Ragdoll();
 		isGrabbed = true;
 		charNav.enabled = false;
 	}
 
+	public void UnGrabbed(){
+		isGrabbed = false;
+		StartCoroutine(Stun());
+	}
+
+	IEnumerator Stun() {
+		stunned = true;
+		yield return new WaitForSeconds(Random.Range(0.75f*stunTime, 1.5f * stunTime));
+		if (dead)
+			yield break;
+		transform.position += new Vector3(pelvis.position.x - transform.position.x, 0f, pelvis.position.z - transform.position.z);
+		pelvis.position = rigOrigPos;
+		charNav.enabled = true;
+		if (charNav.isOnNavMesh) {
+			positionIndex = CharPathController.GetNextSpotIndex(positionIndex);
+			charNav.SetDestination(CharPathController.GetNextSpotVector(positionIndex));
+			anims.Walk();
+		}
+		else {
+			Die(DeathType.Fall);
+		}
+		stunned = false;
+	}
 }

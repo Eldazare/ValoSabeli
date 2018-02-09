@@ -12,7 +12,8 @@ public class StunBehaviour : MonoBehaviour {
 		if (other.CompareTag("DudeBodyPart") && !hit.Contains(other.gameObject))
         {
 			hit.Add(other.gameObject);
-            other.transform.transform.GetComponentInParent<CharAnimations>().Ragdoll();
+			other.transform.transform.GetComponentInParent<CharBody>().Grabbed();
+			other.transform.transform.GetComponentInParent<CharBody>().UnGrabbed();
         }
     }
     // Use this for initialization

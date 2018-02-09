@@ -16,9 +16,9 @@ public static class DudeManager {
 		deathsFall = 0;
 	}
 
-	public static void reportDeath(int type){
+	public static void reportDeath(DeathType type){
 		spawner.SpawnStickFigure ();
-		switch (type) {
+		switch ((int)type) {
 		case 0:
 			deathsBurn += 1;
 			break;
@@ -40,4 +40,10 @@ public static class DudeManager {
 		"Burns :" + deathsBurn + "\n" +
 		"Drowns :" + deathsDrown + "\n";
 	}
+}
+
+public enum DeathType{
+	Burn,
+	Drown,
+	Fall
 }
